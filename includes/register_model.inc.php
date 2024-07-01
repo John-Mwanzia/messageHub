@@ -86,8 +86,8 @@ function create_user(object $pdo, string $username, string $email, string $regNo
 // with infobip
 function send_verification_sms(string $phone, string $token): void
 {
-    // $formated_phone = format_phone_number($phone);
-    $formated_phone = "254719488100";
+    $formated_phone = format_phone_number($phone);
+    // $formated_phone = "254719488100";
 
     $api_url = $_ENV['API_URL'];
     $api_key = $_ENV['API_KEY'];

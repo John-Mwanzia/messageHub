@@ -3,32 +3,39 @@ require_once __DIR__ . '/config_session.inc.php';
 require_once 'dbh.inc.php';
 require_once __DIR__ . '/dashboard_model.php';
 
-$verified_numbers = ["0719488100"];
+$verified_numbers = ["0719488100", "0759654638"];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $message = $_POST['message'];
     $selected_numbers = $_POST['numbers'] ?? [];
-    $input_phone = $_POST['phone'];
+    $input_phones = $_POST['phones'];
 
+    // Split input phones by comma and trim whitespace
+    $input_phones_array = array_map('trim', explode(',', $input_phones));
 
-    // Add formatted input phone to selected numbers if it is in the verified list
-    if ($input_phone && in_array($input_phone, $verified_numbers)) {
-        $selected_numbers[] = $input_phone;
-    } else if ($input_phone) {
-        $_SESSION['error_unverified_phones'] = "Invalid number: $input_phone. Only use the provided numbers.";
-        header("Location: ../dashboard.php");
-        exit();
+    // Validate and add input phones to selected numbers if they are in the verified list
+    foreach ($input_phones_array as $phone) {
+        if ($phone && in_array($phone, $verified_numbers)) {
+            $selected_numbers[] = $phone;
+        } else if ($phone) {
+            $_SESSION['error_unverified_phones'] = "Invalid number: $phone. Only use the provided numbers.";
+            header("Location: ../dashboard.php");
+            exit();
+        }
     }
 
 
     // Format all selected numbers
     $formatted_selected_numbers = array_map('format_phone_number', $selected_numbers);
+    // log
+    // var_dump($formatted_selected_numbers);
 
     // Send SMS only to verified numbers
-    send_sms($formatted_selected_numbers, $message);
-
-
+    // loop and pass the formatted numbers to the send_sms function
+    foreach ($formatted_selected_numbers as $phone) {
+        send_sms($phone, $message);
+    }
 
     $_SESSION['success'] = "Message sent successfully!";
     header("Location: ../dashboard.php");

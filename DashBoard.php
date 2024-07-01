@@ -23,7 +23,7 @@ if (!$user['is_verified']) {
 }
 
 // Predefined verified numbers
-$verified_numbers = ["0719488100"];
+$verified_numbers = ["0719488100", "0759654638"];
 ?>
 
 <!DOCTYPE html>
@@ -35,11 +35,9 @@ $verified_numbers = ["0719488100"];
 </head>
 
 <body>
-    <div class="dashboard-wrapper" style=" width: 70vw; padding: 5rem">
+    <div class="dashboard-wrapper" style="width: 70vw; padding: 5rem;">
         <nav class="header">
-            <h1>
-                SmsHub
-            </h1>
+            <h1>SmsHub</h1>
         </nav>
 
         <h1>Welcome to the Dashboard, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
@@ -54,21 +52,20 @@ $verified_numbers = ["0719488100"];
             echo "</div>";
             unset($_SESSION['success']);
         }
+
         ?>
 
         <div class="form_wrapper">
-            <form action="includes/dashboard.inc.php" method="post" style="width: 100% ">
+            <form action="includes/dashboard.inc.php" method="post" style="width: 100%;">
                 <h3>Send Bulk SMS</h3>
-                <input placeholder="Enter phone number" type="text" name="phone" style="width: auto;">
+                <input placeholder="Enter phone numbers separated by commas...." type="text" name="phones" style="width:30%">
                 <?php
                 if (isset($_SESSION['error_unverified_phones'])) {
                     echo "<p class='error-message'>" . $_SESSION['error_unverified_phones'] . "</p>";
                     unset($_SESSION['error_unverified_phones']);
                 }
                 ?>
-                <p>
-                    or select from the list below
-                </p>
+                <p>or select from the list below</p>
 
                 <?php foreach ($verified_numbers as $number) : ?>
                     <div class="checkbox">
@@ -78,6 +75,7 @@ $verified_numbers = ["0719488100"];
                         </label>
                     </div>
                 <?php endforeach; ?>
+
                 <label for="message" style="margin-top: 1rem;">Message</label>
                 <textarea name="message" style="width: 100%; margin-bottom: 2rem; height: 10rem" required></textarea>
                 <button type="submit" style="width: auto;">Send Message</button>
