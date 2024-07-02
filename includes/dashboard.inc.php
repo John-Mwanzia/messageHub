@@ -3,7 +3,7 @@ require_once __DIR__ . '/config_session.inc.php';
 require_once 'dbh.inc.php';
 require_once __DIR__ . '/dashboard_model.php';
 
-$verified_numbers = ["0719488100", "0759654638"];
+$verified_numbers = ["0719488100", "0759654638", "0757702765"];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

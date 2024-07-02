@@ -23,7 +23,7 @@ if (!$user['is_verified']) {
 }
 
 // Predefined verified numbers
-$verified_numbers = ["0719488100", "0759654638"];
+$verified_numbers = ["0719488100", "0759654638", "0757702765"];
 ?>
 
 <!DOCTYPE html>
